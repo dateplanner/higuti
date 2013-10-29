@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dateroid" />
+    
+    <ImageButton 
+        android:id="@+id/plan_main"
+        android:layout_below="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView 
+        android:id="@+id/plan_description_main"
+        android:layout_below="@id/plan_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plan\nプランを作成または\nプランを実行する"/>
+    
+    <ImageButton 
+        android:id="@+id/search_main"
+        android:layout_marginLeft="80dp"
+        android:layout_alignTop="@id/plan_main"
+        android:layout_toRightOf="@id/plan_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView 
+        android:id="@+id/search_description_main"
+        android:layout_below="@id/search_main"
+        android:layout_alignLeft="@id/search_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search\n気になる店舗を\n検索する"/>
+    
+    <ImageButton 
+        android:id="@+id/history_main"
+        android:layout_below="@id/plan_description_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView 
+        android:id="@+id/history_description_main"
+        android:layout_below="@id/history_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History\n今までのプランや\nお気に入りを編集"/>
+    
+     <ImageButton 
+        android:id="@+id/diary_main"
+        android:layout_marginLeft="80dp"
+        android:layout_alignTop="@id/history_main"
+        android:layout_toRightOf="@id/history_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView 
+        android:id="@+id/diary_description_main"
+        android:layout_below="@id/diary_main"
+        android:layout_alignLeft="@id/diary_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diary\n日記を閲覧や\n編集する"/>
+    
+    
+    
+
+</RelativeLayout>

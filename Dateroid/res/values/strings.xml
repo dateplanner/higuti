@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Dateroid</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="toTop">Topへ</string>
+    <string name="GuruNavi">ぐるなび</string>
+    <string name="KeyWord">キーワード</string>
+
+    <string name="gurunavi_key">0e2db4869d397cac782d81f1717c3759</string>
+	<string name="gurunavi_authority">api.gnavi.co.jp</string>
+	<string name="gurunavi_path_restaurant">/ver1/RestSearchAPI/</string>
+	<string name="gurunavi_path_area">/ver1/AreaSearchAPI/</string>
+	<string name="gurunavi_path_pref">/ver1/PrefSearchAPI/</string>
+	<string name="gurunavi_path_largecategory">/ver1/CategoryLargeSearchAPI/</string>
+	<string name="gurunavi_path_smallcategory">/ver1/CategorySmallSearchAPI</string>
+	
+	<!-- デートプラン条件設定 -->
+	<string name="create_title">作成方法</string>
+    <string name="plan_title">プラン指定</string>
+    <string name="area_title">地域指定</string>
+    <string name="shared_title">おすすめ</string>
+    
+    <!-- プラン編集 -->
+    <string name="plan_edit_title">プラン編集</string>
+    
+    <!-- 共有 -->
+    <string name="select_title">デートプランを選んでください</string>
+	
+	<!-- 日記  -->
+	<string name="require_title">タイトルをいれてね！</string>
+    <string name="diary_content">今日の感想を書いてね！</string>
+    <string name="select_photos">写真を選んでね!!\n（最高で4枚まで選べるよ）</string>
+	
+    <!-- 履歴 -->
+    <string name="favoriteDatePlan">お気に入りデートプラン</string>
+    <string name="dateHistory">履歴</string>
+    <string name="favoriteDateSpot">お気に入りデートスポット</string>
+    
+    
+</resources>

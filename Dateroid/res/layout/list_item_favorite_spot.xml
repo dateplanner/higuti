@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<TextView 
+        android:id="@+id/place_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="キャナルシティ"/>
+    
+	<TextView
+        android:id="@+id/price_text"
+        android:layout_alignBottom="@id/place_text"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="￥5000"/>
+	
+	<ImageView 
+	    android:id="@+id/divider"
+	    android:layout_below="@id/place_text"
+	    android:layout_alignLeft="@id/place_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:src="@android:drawable/divider_horizontal_dark"/>
+	
+	<ImageView 
+	    android:id="@+id/address_image"
+	    android:layout_below="@id/divider"
+	    android:layout_alignLeft="@id/divider"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/ic_launcher"/>
+	    
+	<TextView 
+	    android:id="@+id/address_text"
+	    android:layout_alignBottom="@id/address_image"
+        android:layout_toRightOf="@id/address_image"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="福岡県博多区天神"/>
+
+</RelativeLayout>

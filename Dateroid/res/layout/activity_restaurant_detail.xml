@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <ImageButton 
+            android:id="@+id/back_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_launcher"/>
+        
+        <TextView 
+            android:id="@+id/titile_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5"
+            android:text="店舗詳細"/>
+        
+        <ImageButton 
+            android:id="@+id/decide"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_launcher"/>
+    </LinearLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        
+        <ImageView 
+            android:id="@+id/restaurant_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/favorite_btn"
+            android:layout_alignTop="@id/restaurant_image"
+            android:layout_toRightOf="@id/restaurant_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/websearch_btn"
+            android:layout_below="@id/favorite_btn"
+            android:layout_alignLeft="@id/favorite_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <TextView 
+            android:id="@+id/type_text"
+            android:layout_below="@id/websearch_btn"
+            android:layout_alignLeft="@id/websearch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"/>
+        
+        <ImageButton 
+            android:id="@+id/call_btn"
+            android:layout_below="@id/restaurant_image"
+            android:layout_alignLeft="@id/restaurant_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageView 
+            android:id="@+id/type_image"
+            android:layout_below="@id/type_text"
+            android:layout_alignLeft="@id/type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <TextView 
+            android:id="@+id/name_text"
+            android:layout_below="@id/call_btn"
+            android:layout_alignLeft="@id/call_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="名前："/>
+        
+
+        <TextView 
+            android:id="@+id/name"
+            android:layout_below="@id/name_text"
+            android:layout_alignLeft="@id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <TextView 
+            android:id="@+id/price"
+            android:layout_alignRight="@id/type_image"
+            android:layout_alignBottom="@id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <TextView 
+            android:id="@+id/price_text"
+            android:layout_above="@id/price"
+            android:layout_alignLeft="@id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="料金："/>
+        
+        <TextView 
+            android:id="@+id/address_text"
+            android:layout_below="@id/name"
+            android:layout_alignLeft="@id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="住所："/>
+        
+        <TextView 
+            android:id="@+id/address"
+            android:layout_below="@id/address_text"
+            android:layout_alignLeft="@id/address_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
+    </RelativeLayout>
+    
+
+</LinearLayout>

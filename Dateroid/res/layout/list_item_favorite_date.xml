@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+ 	<TextView 
+        android:id="@+id/datetitle_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="天神デート"/>
+    
+	<ImageView 
+	    android:id="@+id/divider"
+	    android:layout_below="@id/datetitle_text"
+	    android:layout_alignLeft="@id/datetitle_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:src="@android:drawable/divider_horizontal_dark"/>
+	    
+    <ImageView 
+        android:id="@+id/edit_image"
+        android:layout_below="@id/divider"
+        android:layout_alignLeft="@id/divider"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_launcher"/>
+
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_alignTop="@+id/edit_image"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+	
+
+</RelativeLayout>

@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+		body{
+			margin: 0;
+        	padding: 1;
+        	width:100%;
+        	height:100%;
+		}
+      	#map_canvas {
+        	width:75%;
+        	height:100%;
+        	float:left;
+      	}
+      	#direction_panel{
+      		width: 25%;
+      		height: 100%;
+      		overflow-y:scroll;
+      		float:right;
+      	}
+    	</style>
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?sensor=false&v=3&language=ja"></script>
+		<script type="text/javascript">
+			var mapCanvas;
+			function initialize(){
+			    var data = android.getJSON();
+			    var content = JSON.parse(data);
+				
+				//var initPos = new google.maps.LatLng(35.658613, 139.745525);
+				var mapOptions = {
+					//center : initPos,
+					zoom : 16,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				
+				mapCanvas = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+						
+				var directionsService = new google.maps.DirectionsService();
+				directionsService.route(content, callback_direction);
+			}
+			
+			function callback_direction(result, status){
+				if(status == google.maps.DirectionsStatus.OK){
+					var directionsDisplay = new google.maps.DirectionsRenderer({
+						map : mapCanvas,
+						panel : document.getElementById("direction_panel")
+					});
+					directionsDisplay.setDirections(result);
+				}
+			}
+			
+			function createMarker(opts){
+				var marker = new google.maps.Marker(opts);
+				return marker;
+			}
+			google.maps.event.addDomListener(window, "load", initialize);
+			</script>
+		</head>
+		<body>
+			<div id="map_canvas"></div>
+			<div id="direction_panel"></div>
+		</body>
+	</html>
+			

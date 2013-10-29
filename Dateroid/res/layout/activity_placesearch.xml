@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView 
+            android:id="@+id/keyword_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="キーワード検索"/>
+        
+        <EditText 
+            android:id="@+id/keyword_edit"
+            android:layout_below="@id/keyword_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <ImageButton 
+            android:id="@+id/keyword_btn"
+            android:layout_toRightOf="@id/keyword_edit"
+            android:layout_alignBottom="@id/keyword_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView 
+            android:id="@+id/quicksearch_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="簡易検索"/>
+        
+       <ImageButton 
+            android:id="@+id/toilet_btn"
+            android:layout_below="@id/quicksearch_text"
+            android:layout_alignLeft="@id/quicksearch_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+       
+        <ImageButton 
+            android:id="@+id/convenience_btn"
+            android:layout_toRightOf="@id/toilet_btn"
+            android:layout_alignBottom="@id/toilet_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/gasstand_btn"
+            android:layout_below="@id/toilet_btn"
+            android:layout_alignLeft="@id/toilet_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/cafe_btn"
+            android:layout_toRightOf="@id/gasstand_btn"
+            android:layout_alignBottom="@id/gasstand_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/outdoor_btn"
+            android:layout_below="@id/gasstand_btn"
+            android:layout_alignLeft="@id/gasstand_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+        <ImageButton 
+            android:id="@+id/indoor_btn"
+            android:layout_toRightOf="@id/outdoor_btn"
+            android:layout_alignBottom="@id/outdoor_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher"/>
+        
+    </RelativeLayout>
+    
+</LinearLayout>

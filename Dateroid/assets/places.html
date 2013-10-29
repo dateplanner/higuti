@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+      	body, #map_canvas {
+        	margin: 0;
+        	padding: 1;
+        	height: 100%;
+      	}
+    </style>
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;language=ja&amp;libraries=places"></script>
+		<script type="text/javascript">
+			var mapCanvas;
+			function initialize(){
+			    var data = android.getJSON();
+			    var content = JSON.parse(data);
+				
+				var initPos = new google.maps.LatLng(content.location.latitude, content.location.longtitude);
+				
+				var mapOptions = {
+					center : initPos,
+					zoom : 16,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				mapCanvas = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				
+				var request = {
+					location: initPos,
+					types: content.types,
+					radius: content.radius
+				};
+			
+				var placesService = new google.maps.places.PlacesService(mapCanvas);
+				placesService.search(request, callback_Places);
+			}
+			
+			function callback_Places(result, status){
+				
+				if(status == google.maps.places.PlacesServiceStatus.OK){
+					for(var i = 0; i < result.length; i++){
+						var place = result[i];
+						
+						var marker = {name:place.name, position:place.geometry.location};
+						if(typeof place.photo !== "undefined"){
+							marker.photo = place.photos[0].getUrl({"maxWidth": 35, "maxHeight": 35});
+						}
+						if(typeof place.rating !== "undefined"){
+							marker.rating = place.rating;
+						}
+						if(typeof place.vicinity !== "undefined"){
+							marker.vicinity = place.vicinity;
+						}
+						createMarker(marker);
+					}
+				}
+			}
+			
+			function createMarker(opts){
+				opts.map = mapCanvas;
+				var marker = new google.maps.Marker(opts);
+				
+				var form = document.getElementById("markerForm");
+				//var routeBtn = document.getElementById("routeBtn");
+				
+				//document.getElementById("name").innerHTML = opts.name;
+				
+				var infoWnd = new google.maps.InfoWindow();
+				infoWnd.setContent(form);
+				google.maps.event.addListener(marker, "click", function(){
+					infoWnd.open(mapCanvas, marker);
+				});
+				return marker;
+			}
+			google.maps.event.addDomListener(window, "load", initialize);
+			</script>
+		</head>
+		<body>
+		<div id="map_canvas"></div>
+		<form id="markerForm">
+			<div id="name"></div>
+			<input type="button" id="routeBtn" value="経路案内">
+		</form>
+		</body>
+	</html>
+			

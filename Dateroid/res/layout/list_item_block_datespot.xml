@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+ 
+    <TextView 
+        android:id="@+id/blockNo_text"
+        android:layout_alignParentLeft="true"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"/>
+    
+    <TextView 
+        android:id="@+id/spotName_text"
+        android:layout_toRightOf="@id/blockNo_text"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+    
+    <ImageView 
+	    android:id="@+id/divider"
+	    android:layout_below="@id/spotName_text"
+	    android:layout_alignLeft="@id/spotName_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:src="@android:drawable/divider_horizontal_dark"/>
+    
+    <TextView 
+        android:id="@+id/address_text"
+        android:layout_below="@id/divider"
+        android:layout_alignLeft="@id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <ImageView 
+        android:id="@+id/genre_image"
+        android:layout_toRightOf="@id/address_text"
+        android:layout_alignBottom="@id/address_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+
+</RelativeLayout>
