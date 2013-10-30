@@ -17,6 +17,9 @@
 	<string name="gurunavi_path_largecategory">/ver1/CategoryLargeSearchAPI/</string>
 	<string name="gurunavi_path_smallcategory">/ver1/CategorySmallSearchAPI</string>
 	
+	<!-- 警告メッセージ -->
+	<string name="noTel">該当する電話番号がありません</string>
+	
 	<!-- デートプラン条件設定 -->
 	<string name="create_title">作成方法</string>
     <string name="plan_title">プラン指定</string>
@@ -39,5 +42,12 @@
     <string name="dateHistory">履歴</string>
     <string name="favoriteDateSpot">お気に入りデートスポット</string>
     
+    <!-- お気に入り登録 -->
+	<string name="favoriteRegister_title">登録</string>
+    <string name="favoriteRegister_requireTitle">タイトルを入力してください</string>
+	<string name="favoriteRegister_requireComment">一言どうぞ</string>
+    
+    <!-- スポット詳細 -->
+    <string name="spotDetail_title">スポット詳細</string>
     
 </resources>

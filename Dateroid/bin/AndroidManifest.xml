@@ -68,6 +68,13 @@
         <activity 
             android:name=".EditPlanActivity">
         </activity>
+        <activity 
+            android:name=".DateSpotListActivity">
+        </activity>
+        <activity 
+            android:name=".SpotDetailActivity">
+        </activity>
+        <activity android:name=".FavoriteRegisterActivity"></activity>
         
     </application>
 

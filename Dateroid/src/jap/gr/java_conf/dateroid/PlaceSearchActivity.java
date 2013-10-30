@@ -83,14 +83,18 @@ public class PlaceSearchActivity extends Activity {
 		outdoor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent(getApplicationContext(), DateSpotListActivity.class);
+				intent.putExtra("placeType", 1);
+				startActivity(intent);
 			}
 		});
 		
 		indoor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent(getApplicationContext(), DateSpotListActivity.class);
+				intent.putExtra("placeType", 0);
+				startActivity(intent);
 			}
 		});
 	}

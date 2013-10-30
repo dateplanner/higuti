@@ -69,6 +69,7 @@ public class ConditionAreaFragment extends Fragment {
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_condition_area,
 				cursor, areaFrom, areaTo);
 		list.setAdapter(adapter);
+		dbAdapter.close();
 		
         makePlan.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {

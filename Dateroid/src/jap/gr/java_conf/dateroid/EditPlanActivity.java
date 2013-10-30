@@ -71,6 +71,7 @@ public class EditPlanActivity extends Activity {
 				items.add(new BlockRestaurant());
 			}
 		}
+		dbAdapter.close();
 		BlockAdapter adapter = new BlockAdapter(this, items);
 		blockList.setAdapter(adapter);
 	}

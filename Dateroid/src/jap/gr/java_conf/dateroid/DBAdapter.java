@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.widget.Toast;
 
 public class DBAdapter{
 	
@@ -90,6 +91,15 @@ public class DBAdapter{
 		return db.rawQuery(sqlString, (String[])args.toArray(new String[args.size()]));
 	}
 	
+	public Cursor selectDateSpotById(int placeId){
+		return db.rawQuery("SELECT * FROM date_spot WHERE _id = ?", new String[]{String.valueOf(placeId)});
+	}
+	
+	public Cursor selectDateSpotByPlaceType(int placeType){
+		return db.rawQuery("SELECT * FROM date_spot WHERE datespot_outdoor_flg = ? ORDER BY datespot_kana",
+				new String[]{String.valueOf(placeType)});
+	}
+	
 	/////////////////////////////////////////////////////////INSERT
 	public void insertDiary(String date, String text, int id){
 		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_text, date_plan_id) " +
@@ -136,15 +146,16 @@ public class DBAdapter{
 	}
 	
 	public void insertDatePlanDetail(int plan_id, int detail_id, String comment, 
-			String restaurant_id, int spot_id){
+			String restaurant_id, int spot_id, int block_type){
 		stmt = db.compileStatement("INSERT INTO date_plan_detail(date_plan_id, date_plan_detail_id" +
-						", date_plan_detail_comment, restaurant_id, date_spot_id)" +
-						" VALUES(?, ?, ?, ?, ?)");
+						", date_plan_detail_comment, restaurant_id, date_spot_id, block_type)" +
+						" VALUES(?, ?, ?, ?, ?, ?)");
 		stmt.bindLong(1, plan_id);
 		stmt.bindLong(2, detail_id);
 		stmt.bindString(3, comment);
 		stmt.bindString(4, restaurant_id);
 		stmt.bindLong(5, spot_id);
+		stmt.bindLong(6, block_type);
 		db.beginTransaction();
 		try {
 			stmt.executeInsert();
@@ -154,13 +165,18 @@ public class DBAdapter{
 		}
 	}
 	
-	public void insertFavoriteSpot(int spot_id){
-		stmt = db.compileStatement("INSERT INTO favorite_spot(favorite_spot_id) VALUES(?)");
+	public void insertFavoriteSpot(int spot_id, String title, String comment, double rating){
+		stmt = db.compileStatement("INSERT INTO favorite_spot(favorite_spot_id, favorite_spot_title, " +
+				"favorite_spot_comment, favorite_spot_rating) VALUES(?, ? ,?, ?)");
 		stmt.bindLong(1, spot_id);
+		stmt.bindString(2, title);
+		stmt.bindString(3, comment);
+		stmt.bindDouble(4, rating);
 		db.beginTransaction();
 		try {
 			stmt.executeInsert();
 			db.setTransactionSuccessful();
+			Log.v("test", "success");
 		}finally{
 			db.endTransaction();
 		}
@@ -168,8 +184,7 @@ public class DBAdapter{
 	
 	public void insertFavoriteDatePlan(int plan_id, String title, String comment, double rating){
 		stmt = db.compileStatement("INSERT INTO favorite_date_plan(date_plan_id, favorite_date_plan_title" +
-						", favorite_date_plan_comment, favorite_date_plan_rating)" + 
-						" VALUES(?, ?, ?, ?)");
+						", favorite_date_plan_comment, favorite_date_plan_rating) VALUES(?, ?, ?, ?)");
 		stmt.bindLong(1, plan_id);
 		stmt.bindString(2, title);
 		stmt.bindString(3, comment);
@@ -386,6 +401,7 @@ public class DBAdapter{
 //						", date_plan_detail_comment TEXT" +
 //						", restaurant_id TEXT" +
 //						", date_spot_id INTEGER" +
+//						", block_type INTEGER" +
 //						", foreign key (date_plan_id) references date_plan(_id) on delete cascade" +
 //						", foreign key (date_spot_id) references date_spot(_id) on delete set null" +
 //						")");
@@ -394,6 +410,9 @@ public class DBAdapter{
 //				db.execSQL("create table favorite_spot(" +
 //						"_id INTEGER PRIMARY KEY AUTOINCREMENT" +
 //						", favorite_spot_id INTEGER not null" +
+//						", favorite_spot_title TEXT" +
+//						", favorite_spot_comment TEXT" + 
+//						", favorite_spot_rating REAL" +
 //						", foreign key (favorite_spot_id) references date_spot(_id) on delete cascade" +
 //						")");
 //				
