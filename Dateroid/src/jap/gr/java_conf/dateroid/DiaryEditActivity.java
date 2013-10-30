@@ -15,60 +15,91 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 public class DiaryEditActivity extends FragmentActivity {
 	
 	//登録できる写真の数
     private static final int NUM_PHOTOS = 4;
 
-    private ViewPager mPager;
     private TextView today;
+    private ImageView photo1;
+    private ImageView photo2;
+    private ImageView photo3;
+    private ImageView photo4;
+    
     private PagerAdapter mPagerAdapter;
 
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_edit);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
         today = (TextView)findViewById(R.id.date);
-        
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            	//ページング中はオプションメニューを無効化
-                invalidateOptionsMenu();
-            }
-        });
+        photo1 = (ImageView)findViewById(R.id.photo1);
+        photo2 = (ImageView)findViewById(R.id.photo2);
+        photo3 = (ImageView)findViewById(R.id.photo3);
+        photo4 = (ImageView)findViewById(R.id.photo4);
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
         Date date = new Date();
         today.setText(sdf.format(date));
 
+        photo1.setOnClickListener(photoClickListener);
+        photo2.setOnClickListener(photoClickListener);
+        photo3.setOnClickListener(photoClickListener);
+        photo4.setOnClickListener(photoClickListener);
+        
     }
 
+    private View.OnClickListener photoClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			int curPageNo = 0;
+			switch (v.getId()) {
+			case R.id.photo1:
+				curPageNo = R.id.photo1;
+				break;
+			case R.id.photo2:
+				curPageNo = R.id.photo2;
+				break;
+			case R.id.photo3:
+				curPageNo = R.id.photo3;
+				break;
+			case R.id.photo4:
+				curPageNo = R.id.photo4;
+				break;
+			}
+			Intent intent = new Intent(getApplicationContext(), PhotoListActivity.class);
+			intent.putExtra("curPageNo", curPageNo);
+			startActivity(intent);
+		}
+	};
+    
     @Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		
-		if(!intent.hasExtra("selectedPhoto") && !intent.hasExtra("curPageNo")){
-			return;
-		}
-		long photoId = intent.getLongExtra("selectedPhoto", 0);
-		int curPageNo = intent.getIntExtra("curPageNo", 0);
-		mPager.setCurrentItem(curPageNo);
-		
-		ContentResolver resolver = getContentResolver();
-		Bitmap bmp = MediaStore.Images.Thumbnails.getThumbnail(resolver, photoId,
-         		MediaStore.Images.Thumbnails.MINI_KIND, null);
-		
-		ViewPager pager = (ViewPager)findViewById(R.id.pager);
-		FragmentStatePagerAdapter sAdapter = (FragmentStatePagerAdapter)pager.getAdapter();
-		DiaryEditPageFragment page = (DiaryEditPageFragment)sAdapter.instantiateItem(pager, pager.getCurrentItem());
-
-		page.setImage(bmp);
+//		if(!intent.hasExtra("selectedPhoto") && !intent.hasExtra("curPageNo")){
+//			return;
+//		}
+//		long photoId = intent.getLongExtra("selectedPhoto", 0);
+//		int curPageNo = intent.getIntExtra("curPageNo", 0);
+//		mPager.setCurrentItem(curPageNo);
+//		
+//		ContentResolver resolver = getContentResolver();
+//		Bitmap bmp = MediaStore.Images.Thumbnails.getThumbnail(resolver, photoId,
+//         		MediaStore.Images.Thumbnails.MINI_KIND, null);
+//		
+//		ViewPager pager = (ViewPager)findViewById(R.id.pager);
+//		FragmentStatePagerAdapter sAdapter = (FragmentStatePagerAdapter)pager.getAdapter();
+//		DiaryEditPageFragment page = (DiaryEditPageFragment)sAdapter.instantiateItem(pager, pager.getCurrentItem());
+//
+//		page.setImage(bmp);
 	}
 
 	@Override
@@ -125,4 +156,6 @@ public class DiaryEditActivity extends FragmentActivity {
             return NUM_PHOTOS;
         }
     }
+
+
 }

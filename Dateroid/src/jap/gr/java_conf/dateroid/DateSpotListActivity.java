@@ -47,7 +47,7 @@ public class DateSpotListActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getApplicationContext(), SpotDetailActivity.class);
 				intent.putExtra("spotId", (int)id);
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		});
 	}

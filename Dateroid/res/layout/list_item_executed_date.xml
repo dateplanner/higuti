@@ -6,8 +6,7 @@
 	<TextView 
         android:id="@+id/date_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="日付"/>
+        android:layout_height="wrap_content"/>
     
 	<ImageButton
         android:id="@+id/register_image"
@@ -31,7 +30,6 @@
 	    android:layout_below="@id/divider"
 	    android:layout_alignLeft="@id/divider"
 	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="福岡/天神"/>
+	    android:layout_height="wrap_content"/>
 
 </RelativeLayout>

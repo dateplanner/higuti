@@ -57,10 +57,39 @@
             android:layout_centerVertical="true"
             android:textSize="20sp"
             android:text="@string/select_photos"/>
-        <android.support.v4.view.ViewPager
-	        android:id="@+id/pager"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"/>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/photo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/orca" />
+
+	            <ImageView
+	                android:id="@+id/photo2"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:src="@drawable/orca" />
+
+	            <ImageView 
+	                android:id="@+id/photo3"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:src="@drawable/orca"/>
+	            <ImageView 
+	                android:id="@+id/photo4"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:src="@drawable/orca"/>
+        	</LinearLayout>
+        </HorizontalScrollView>
 	</RelativeLayout>
     
 

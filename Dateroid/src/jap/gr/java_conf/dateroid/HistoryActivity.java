@@ -107,7 +107,19 @@ public class HistoryActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return HistoryPageFragment.create(position);
+        	Fragment fragment = null;
+        	switch (position) {
+			case 0:
+	            fragment = HistoryFavoritePlanFragment.create(position);
+	            break;
+			case 1:
+				fragment = HistoryExecutedPlanFragment.create(position);
+				break;
+			case 2:
+				fragment = HistoryFavoriteSpotFragment.create(position);
+				break;
+			}
+            return fragment;
         }
 
         @Override

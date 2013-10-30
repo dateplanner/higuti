@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ public class SpotDetailActivity extends Activity {
 	private String telephoneNo;
 	private String latitude;
 	private String longitude;
+	private String className;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class SpotDetailActivity extends Activity {
 			return;
 		}
 		spotId = intent.getIntExtra("spotId", 0);
+		className = getCallingActivity().getClassName();
 		
 		spotImage = (ImageView)findViewById(R.id.spot_image);
 		type = (ImageView)findViewById(R.id.type_image);
@@ -54,6 +57,10 @@ public class SpotDetailActivity extends Activity {
 		price = (TextView)findViewById(R.id.price_text);
 		address = (TextView)findViewById(R.id.address_text);
 		
+		if(className.equals(HistoryActivity.class.getName())){
+			favorite.setVisibility(View.INVISIBLE);
+		}; 
+				
 		
 		dbAdapter = new DBAdapter(this);
 		dbAdapter.openReadableDatabase();

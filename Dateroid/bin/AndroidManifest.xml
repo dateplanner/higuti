@@ -75,6 +75,7 @@
             android:name=".SpotDetailActivity">
         </activity>
         <activity android:name=".FavoriteRegisterActivity"></activity>
+        <activity android:name=".DiaryCalendarActivity"></activity>
         
     </application>
 

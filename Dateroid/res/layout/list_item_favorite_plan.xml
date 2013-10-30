@@ -9,6 +9,13 @@
         android:layout_height="wrap_content"
         android:text="天神デート"/>
     
+ 	<RatingBar
+        android:id="@+id/rating"
+        android:layout_alignTop="@+id/datetitle_text"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+ 	
 	<ImageView 
 	    android:id="@+id/divider"
 	    android:layout_below="@id/datetitle_text"
@@ -26,14 +33,15 @@
         android:layout_width="wrap_content"
         android:layout_alignParentLeft="true"
         android:src="@drawable/ic_launcher"/>
-
-    <RatingBar
-        android:id="@+id/rating"
-        android:layout_alignTop="@+id/edit_image"
-        android:layout_alignParentRight="true"
+    
+    <TextView 
+        android:id="@+id/comment_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/edit_image"
+        android:layout_alignBottom="@id/edit_image"/>
 
+  
 	
 
 </RelativeLayout>

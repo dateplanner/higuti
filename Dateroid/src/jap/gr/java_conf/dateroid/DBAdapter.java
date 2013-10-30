@@ -100,6 +100,20 @@ public class DBAdapter{
 				new String[]{String.valueOf(placeType)});
 	}
 	
+	public Cursor selectFavoritePlan(){
+		//ビューを返すように変更
+		return db.rawQuery("SELECT * FROM favorite_date_plan ORDER BY _id", null);
+	}
+	
+//	public Cursor selectExecutedDate(){
+//		//ビューを返すように変更
+//}
+	
+	public Cursor selectFavoriteSpot(){
+		//ビューを返すように変更
+		return db.rawQuery("SELECT * FROM favorite_spot ORDER BY _id", null);
+	}
+	
 	/////////////////////////////////////////////////////////INSERT
 	public void insertDiary(String date, String text, int id){
 		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_text, date_plan_id) " +

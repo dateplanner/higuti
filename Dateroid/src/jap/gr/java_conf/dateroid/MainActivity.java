@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
         diary.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getParent(), diary.class);
-//				startActivity(intent);
+				Intent intent = new Intent(getApplicationContext(), DiaryCalendarActivity.class);
+				startActivity(intent);
 			}
 		});
     }
