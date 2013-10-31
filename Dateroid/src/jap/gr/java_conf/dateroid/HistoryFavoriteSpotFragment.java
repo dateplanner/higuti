@@ -27,7 +27,7 @@ public class HistoryFavoriteSpotFragment extends Fragment {
     private TextView title;
     private ListView list;
     
-    private static String[] spotFrom = {"favorite_spot_title", "favorite_spot_price", "farovite_spot_address"};
+    private static String[] spotFrom = {"favorite_spot_name", "favorite_spot_price", "farovite_spot_address"};
     private static int[] spotTo = {R.id.place_text, R.id.price_text, R.id.address_text};
     
     public static HistoryFavoriteSpotFragment create(int pageNumber) {

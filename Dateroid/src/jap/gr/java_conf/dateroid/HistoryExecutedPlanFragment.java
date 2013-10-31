@@ -28,7 +28,7 @@ public class HistoryExecutedPlanFragment extends Fragment {
     private ListView list;
     
     private static String[] executedFrom = {"favorite_date_plan_title", "favorite_date_plan_comment", "favorite_date_plan_rating"};
-    private static int[] executedTo = {R.id.datetitle_text, R.id.comment_text, R.id.rating};
+    private static int[] executedTo = {R.id.date_text, R.id.area_text};
     
     public static HistoryExecutedPlanFragment create(int pageNumber) {
         HistoryExecutedPlanFragment fragment = new HistoryExecutedPlanFragment();

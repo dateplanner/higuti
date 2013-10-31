@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<TextView 
+        android:id="@+id/date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="日付"/>
+    
+	<ImageButton
+        android:id="@+id/register_image"
+        android:layout_alignBottom="@id/date_text"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+	
+	<ImageView 
+	    android:id="@+id/divider"
+	    android:layout_below="@id/date_text"
+	    android:layout_alignLeft="@id/date_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:src="@android:drawable/divider_horizontal_dark"/>
+	    
+	<TextView 
+	    android:id="@+id/area_text"
+	    android:layout_below="@id/divider"
+	    android:layout_alignLeft="@id/divider"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="福岡/天神"/>
+
+</RelativeLayout>

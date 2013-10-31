@@ -100,10 +100,6 @@ public class DBAdapter{
 				new String[]{String.valueOf(placeType)});
 	}
 	
-	public Cursor selectFavoritePlan(){
-		//ビューを返すように変更
-		return db.rawQuery("SELECT * FROM favorite_date_plan ORDER BY _id", null);
-	}
 	
 //	public Cursor selectExecutedDate(){
 //		//ビューを返すように変更
@@ -114,28 +110,38 @@ public class DBAdapter{
 		return db.rawQuery("SELECT * FROM favorite_spot ORDER BY _id", null);
 	}
 	
+	public Cursor selectFavoritePlan(){
+		return db.rawQuery("SELECT * FROM favorite_date_plan ORDER BY _id", null);
+	}
+	
 	/////////////////////////////////////////////////////////INSERT
-	public void insertDiary(String date, String text, int id){
-		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_text, date_plan_id) " +
+//	public long insertDiary(String date, String title, String text, int id){
+	public long insertDiary(String date, String title, String text){
+		long rowId;
+//		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_text, date_plan_id) " +
+//				"VALUES(?, ?, ?, ?)");
+		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_title, diary_text) " +
 				"VALUES(?, ?, ?)");
 		stmt.bindString(1, date);
-		stmt.bindString(2, text);
-		stmt.bindLong(3, id);
+		stmt.bindString(2, title);
+		stmt.bindString(3, text);
+//		stmt.bindLong(4, id);
 		db.beginTransaction();
 		try {
-			stmt.executeInsert();
+			rowId = stmt.executeInsert();
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
 		}
+		return rowId;
 	}
 	
-	public void insertDiaryPhoto(int id, int serno, String uri){
-		stmt = db.compileStatement("INSERT INTO diary_photo(diary_photo_id, diary_photo_serno" +
-						", diary_photo_uri) VALUES(?, ?, ?)");
-		stmt.bindLong(1, id);
+	public void insertDiaryPhoto(long diary_id, int serno, long photo_id){
+		stmt = db.compileStatement("INSERT INTO diary_photo(diary_id, diary_photo_serno" +
+						", diary_photo_id) VALUES(?, ?, ?)");
+		stmt.bindLong(1, diary_id);
 		stmt.bindLong(2, serno);
-		stmt.bindString(3, uri);
+		stmt.bindLong(3, photo_id);
 		db.beginTransaction();
 		try {
 			stmt.executeInsert();
@@ -387,17 +393,18 @@ public class DBAdapter{
 //				db.execSQL("create table diary(" +
 //						"_id INTEGER PRIMARY KEY AUTOINCREMENT" +
 //						", diary_date TEXT not null" +
+//						", diary_title TEXT" +
 //						", diary_text TEXT" +
 //						", date_plan_id INTEGER" +
 //						", foreign key (date_plan_id) references date_plan(_id) on delete set null" +
 //						")");
 //				
 //				//日記写真テーブル
-//				db.execSQL("create table diary_photo(diary_photo_id INTEGER" +
+//				db.execSQL("create table diary_photo(diary_id INTEGER" +
 //						", diary_photo_serno INTEGER" +
-//						", diary_photo_uri TEXT not null" +
+//						", diary_photo_id INTEGER not null" +
 //						", PRIMARY KEY(diary_photo_id, diary_photo_serno)" +
-//						", foreign key (diary_photo_id) references diary(_id) on delete cascade" +
+//						", foreign key (diary_id) references diary(_id) on delete cascade" +
 //						")");
 //				
 //				//デートプランテーブル
@@ -474,6 +481,13 @@ public class DBAdapter{
 //						", PRIMARY KEY (date_spot_id,genre_id)" +
 //						", foreign key (date_spot_id) references date_spot(_id) on delete cascade" +
 //						", foreign key (genre_id) references genre(genre_id) on delete cascade)");
+//			
+	//			//お気に入りスポットビュー
+	//			db.execSQL("create view favorite_spot_view as" +
+	//					" select favorite_spot._id as _id, datespot_name as favorite_spot_name" +
+	//					", datespot_price as favorite_spot_price, datespot_address as favorite_spot_address" +
+	//					" from favorite_spot left outer join date_spot on favorite_spot.favorite_spot_id = date_spot._id");
+//			
 //			}finally{
 //				db.endTransaction();
 //			}
