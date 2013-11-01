@@ -13,4 +13,13 @@ public class BlockFree extends Block{
 		this.comment = comment;
 	}
 
+	@Override
+	String getAddress() {
+		return null;
+	}
+
+	@Override
+	void setAddress(String address) {
+	}
+
 }

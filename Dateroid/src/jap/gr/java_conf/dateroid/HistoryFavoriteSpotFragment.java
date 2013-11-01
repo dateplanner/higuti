@@ -1,19 +1,13 @@
 package jap.gr.java_conf.dateroid;
 
-import android.R.integer;
-import android.R.raw;
 import android.app.Fragment;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +21,7 @@ public class HistoryFavoriteSpotFragment extends Fragment {
     private TextView title;
     private ListView list;
     
-    private static String[] spotFrom = {"favorite_spot_name", "favorite_spot_price", "farovite_spot_address"};
+    private static String[] spotFrom = {"favorite_spot_name", "favorite_spot_price", "favorite_spot_address"};
     private static int[] spotTo = {R.id.place_text, R.id.price_text, R.id.address_text};
     
     public static HistoryFavoriteSpotFragment create(int pageNumber) {
@@ -63,9 +57,10 @@ public class HistoryFavoriteSpotFragment extends Fragment {
 		dbAdapter = new DBAdapter(getActivity());
 		dbAdapter.openReadableDatabase();
 		
-		Cursor cursor = dbAdapter.selectFavoritePlan();
+		Cursor cursor = dbAdapter.selectFavoriteSpot();
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_favorite_spot,
-				cursor, spotFrom, spotTo);
+					cursor, spotFrom, spotTo);
+	
 		list.setAdapter(adapter);
 		dbAdapter.close();
 

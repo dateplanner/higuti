@@ -106,8 +106,7 @@ public class DBAdapter{
 //}
 	
 	public Cursor selectFavoriteSpot(){
-		//ビューを返すように変更
-		return db.rawQuery("SELECT * FROM favorite_spot ORDER BY _id", null);
+		return db.rawQuery("SELECT * FROM favorite_spot_view", null);
 	}
 	
 	public Cursor selectFavoritePlan(){
@@ -482,12 +481,20 @@ public class DBAdapter{
 //						", foreign key (date_spot_id) references date_spot(_id) on delete cascade" +
 //						", foreign key (genre_id) references genre(genre_id) on delete cascade)");
 //			
-	//			//お気に入りスポットビュー
-	//			db.execSQL("create view favorite_spot_view as" +
-	//					" select favorite_spot._id as _id, datespot_name as favorite_spot_name" +
-	//					", datespot_price as favorite_spot_price, datespot_address as favorite_spot_address" +
-	//					" from favorite_spot left outer join date_spot on favorite_spot.favorite_spot_id = date_spot._id");
-//			
+//				//お気に入りスポットビュー
+//				db.execSQL("create view favorite_spot_view as" +
+//						" select favorite_spot.favorite_spot_id as _id, datespot_name as favorite_spot_name" +
+//						", datespot_price as favorite_spot_price, datespot_address as favorite_spot_address" +
+//						" from favorite_spot left outer join date_spot on favorite_spot.favorite_spot_id = date_spot._id" +
+//						" order by favorite_spot._id);
+			
+//				//実行済デート、エリア小分類名ビュー
+//				db.execSQL("create view executed_plan_small_area as select date_plan._id as _id," +
+//						" area_small_classification_name from date_plan, date_plan_detail, date_spot," +
+//						" area_small_classification where  date_plan._id = date_plan_detail.date_plan_id" +
+//						" and date_plan_detail.date_spot_id = date_spot._id" +
+//						" and date_spot.area_small_classification_id = area_small_classification._id" +
+//						" and date_plan_executed_flg = 1;");
 //			}finally{
 //				db.endTransaction();
 //			}

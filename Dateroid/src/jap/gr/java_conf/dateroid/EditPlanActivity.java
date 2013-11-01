@@ -1,17 +1,25 @@
 package jap.gr.java_conf.dateroid;
 
-import java.util.ArrayList;
-import java.util.List;
+import jap.gr.java_conf.dateroid.DirectionsJSON.TravelMode;
 
-import android.R.integer;
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 
 public class EditPlanActivity extends Activity {
 
@@ -22,6 +30,8 @@ public class EditPlanActivity extends Activity {
 	private ImageButton newBlock;
 	private ImageButton save;
 	private ImageButton doDate;
+	private SlidingDrawer drawer;
+	private WebView webView;
 	
 	private DBAdapter dbAdapter;
 	private int[] areas;
@@ -30,6 +40,7 @@ public class EditPlanActivity extends Activity {
 	
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_plan);
@@ -41,6 +52,8 @@ public class EditPlanActivity extends Activity {
 		newBlock = (ImageButton)findViewById(R.id.new_btn);
 		save = (ImageButton)findViewById(R.id.save_btn);
 		doDate = (ImageButton)findViewById(R.id.doDate_btn);
+		drawer = (SlidingDrawer)findViewById(R.id.drawer);
+		webView = (WebView)findViewById(R.id.webview);
 		
 		Intent intent = getIntent();
 		if(intent == null){
@@ -64,16 +77,53 @@ public class EditPlanActivity extends Activity {
 			blockDS.setBlockNo(blockNo);
 			blockDS.setSpotId(cursor.getInt(cursor.getColumnIndex("_id")));
 			blockDS.setSpotName(cursor.getString(cursor.getColumnIndex("datespot_name")));
-			blockDS.setSpotAddress(cursor.getString(cursor.getColumnIndex("datespot_address")));
+			blockDS.setAddress(cursor.getString(cursor.getColumnIndex("datespot_address")));
 
 			items.add(blockDS);
-			if(blockNo == 2){
-				items.add(new BlockRestaurant());
-			}
+//			if(blockNo == 2){
+//				items.add(new BlockRestaurant());
+//			}
 		}
 		dbAdapter.close();
 		BlockAdapter adapter = new BlockAdapter(this, items);
 		blockList.setAdapter(adapter);
+		
+		blockList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			}
+		});
+		
+		drawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
+			@Override
+			public void onDrawerOpened() {
+				
+				DirectionsJSON directionsJSON = new DirectionsJSON();
+				
+				ListAdapter adapter = blockList.getAdapter();
+				
+				Block originBlock = (Block)adapter.getItem(0);
+				Block destinationBlock = (Block)adapter.getItem(adapter.getCount() -1);
+				directionsJSON.setOrigin(originBlock.getAddress());
+				directionsJSON.setDestination(destinationBlock.getAddress());
+		
+				for (int i = 1; i < adapter.getCount() -1; i++) {
+					Block waypointBlock = (Block)adapter.getItem(i);
+					directionsJSON.setWaypoint(waypointBlock.getAddress());
+				}
+				directionsJSON.setTravelMode(TravelMode.DRIVING);
+				
+				webView.addJavascriptInterface(directionsJSON, "android");
+				webView.requestFocusFromTouch();
+				webView.setWebViewClient(new WebViewClient());
+				webView.setWebChromeClient(new WebChromeClient());
+				
+				//webページをロード
+				webView.loadUrl("file:///android_asset/whole_direction.html");	
+				WebSettings webSettings = webView.getSettings();
+				webSettings.setJavaScriptEnabled(true);
+			}
+		});
 	}
 
 	

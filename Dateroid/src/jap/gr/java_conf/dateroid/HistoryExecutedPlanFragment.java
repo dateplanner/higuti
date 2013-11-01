@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 public class HistoryExecutedPlanFragment extends Fragment {
 	
-    public static final String ARG_PAGE = "doneplan";
+    public static final String ARG_PAGE = "executedplan";
     
     private int mPageNumber;
     private DBAdapter dbAdapter;
@@ -58,7 +58,7 @@ public class HistoryExecutedPlanFragment extends Fragment {
         list = (ListView)rootView.findViewById(R.id.history_list);
        
         
-		title.setText(getText(R.string.favoriteDatePlan));
+		title.setText(getText(R.string.dateHistory));
         
 		dbAdapter = new DBAdapter(getActivity());
 		dbAdapter.openReadableDatabase();

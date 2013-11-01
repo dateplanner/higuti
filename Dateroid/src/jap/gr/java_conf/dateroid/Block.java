@@ -28,6 +28,8 @@ abstract class Block {
 	public void setBlockNo(int blockNo){
 		this.blockNo = blockNo;
 	}
-
+	
+	abstract String getAddress();
+	abstract void setAddress(String address);
 	
 }

@@ -35,13 +35,12 @@ public class BlockDateSpot extends Block{
 	}
 
 
-	public String getSpotAddress() {
+	public String getAddress() {
 		return spotAddress;
 	}
 
-
-	public void setSpotAddress(String spotAddress) {
-		this.spotAddress = spotAddress;
+	public void setAddress(String address) {
+		this.spotAddress = address;
 	}
 
 

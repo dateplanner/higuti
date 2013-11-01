@@ -87,7 +87,7 @@ public class BlockAdapter extends BaseAdapter {
 			
 			blockNo.setText(String.valueOf(item.getBlockNo()));
 			spotName.setText(item.getSpotName());
-			address.setText(item.getSpotAddress());
+			address.setText(item.getAddress());
 		}else if(baseItem instanceof BlockRestaurant){
 			if(convertView == null){
 				blockView = inflater.inflate(R.layout.list_item_block_restaurant, parent, false);
