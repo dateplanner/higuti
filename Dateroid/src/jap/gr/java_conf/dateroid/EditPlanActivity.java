@@ -80,9 +80,9 @@ public class EditPlanActivity extends Activity {
 			blockDS.setAddress(cursor.getString(cursor.getColumnIndex("datespot_address")));
 
 			items.add(blockDS);
-//			if(blockNo == 2){
-//				items.add(new BlockRestaurant());
-//			}
+			if(blockNo == 2){
+				items.add(new BlockRestaurant());
+			}
 		}
 		dbAdapter.close();
 		BlockAdapter adapter = new BlockAdapter(this, items);
@@ -109,7 +109,11 @@ public class EditPlanActivity extends Activity {
 		
 				for (int i = 1; i < adapter.getCount() -1; i++) {
 					Block waypointBlock = (Block)adapter.getItem(i);
-					directionsJSON.setWaypoint(waypointBlock.getAddress());
+					String address = waypointBlock.getAddress();
+					
+					if(adapter.getItemViewType(i) != 2 &&  address != null){
+						directionsJSON.setWaypoint(address);
+					}
 				}
 				directionsJSON.setTravelMode(TravelMode.DRIVING);
 				

@@ -67,6 +67,12 @@ public class DBAdapter{
 		return db.rawQuery("SELECT * FROM diary WHERE diary_date = ?", new String[]{diary_date});
 	}
 	
+	public Cursor selectDiaryPhoto(int diaryId){
+		return db.rawQuery("SELECT diary_photo_id FROM diary_photo WHERE diary_id = ? ORDER BY diary_photo_serno",
+				new String[]{String.valueOf(diaryId)});
+	}
+	
+	
 	public Cursor selectSmallArea(int large_area_id){
 		return db.rawQuery("SELECT * FROM area_small_classification " +
 					"WHERE area_large_classification_id = ? ORDER BY _id", new String[]{String.valueOf(large_area_id)});

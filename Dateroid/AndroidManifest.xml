@@ -74,8 +74,15 @@
         <activity 
             android:name=".SpotDetailActivity">
         </activity>
-        <activity android:name=".FavoriteRegisterActivity"></activity>
-        <activity android:name=".DiaryCalendarActivity"></activity>
+        <activity 
+            android:name=".FavoriteRegisterActivity">
+        </activity>
+        <activity 
+            android:name=".DiaryCalendarActivity">
+        </activity>
+        <activity 
+            android:name=".DiaryReadActivity">
+        </activity>
         
     </application>
 

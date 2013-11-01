@@ -80,34 +80,30 @@ public class DiaryEditActivity extends FragmentActivity {
         edit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dbAdapter = new DBAdapter(getApplicationContext());
-				dbAdapter.openWritableDatabase();
-				if (diaryId == 0) {
-					String today = DateFormat.format("yyyyMMdd", Calendar.getInstance()).toString();
-					//デートプラントの結合をどうするか要検討
-					long rowId = dbAdapter.insertDiary(today, title.getText().toString(),
-							diary.getText().toString());
-					if(rowId == -1){
-						//エラー処理
-					}
-					int j = 1;
-					for (int i = 0; i < photoIdArray.length; i++) {
-						long photoId = photoIdArray[i];
-						if(photoId != 0){
-							dbAdapter.insertDiaryPhoto(rowId, j, photoId);
-						}
-						j++;
-					}
-				}else{
-					
-				}
+				
 			}
 		});
         
         save.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				dbAdapter = new DBAdapter(getApplicationContext());
+				dbAdapter.openWritableDatabase();
+				String today = DateFormat.format("yyyyMMdd", Calendar.getInstance()).toString();
+				//デートプラントの結合をどうするか要検討
+				long rowId = dbAdapter.insertDiary(today, title.getText().toString(),
+						diary.getText().toString());
+				if(rowId == -1){
+					//エラー処理
+				}
+				int j = 1;
+				for (int i = 0; i < photoIdArray.length; i++) {
+					long photoId = photoIdArray[i];
+					if(photoId != 0){
+						dbAdapter.insertDiaryPhoto(rowId, j, photoId);
+					}
+					j++;
+				}
 			}
 		});
         
