@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <array name="select_block_items">
-        <item>@string/select_block_spot</item>
-        <item>@string/select_block_restaurant</item>
-        <item>@string/select_block_free</item>
-        <item>@string/select_block_cancel</item>
-    </array>
-</resources>

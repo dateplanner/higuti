@@ -20,7 +20,7 @@ public class FavoriteRegisterActivity extends Activity {
 	
 	private DBAdapter dbAdapter;
 	private int favoriteId;
-//	private String className;
+	private String className;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class FavoriteRegisterActivity extends Activity {
 			return;
 		}
 		favoriteId = intent.getIntExtra("favoriteId", 0);
-//		className = getCallingActivity().getClassName();
+		className = getCallingActivity().getClassName();
 		
 		title = (EditText)findViewById(R.id.title_edit);
 		comment = (EditText)findViewById(R.id.comment_edit);
@@ -45,15 +45,13 @@ public class FavoriteRegisterActivity extends Activity {
 			public void onClick(View v) {
 				dbAdapter = new DBAdapter(getApplicationContext());
 				dbAdapter.openWritableDatabase();
-//				if(className.equals(SpotDetailActivity.class.getName())){
-//					dbAdapter.insertFavoriteSpot(favoriteId, title.getText().toString(), 
-//							comment.getText().toString(), (double)rating.getRating());
-//				}else{
-//					dbAdapter.insertFavoriteDatePlan(favoriteId, title.getText().toString(), 
-//							comment.getText().toString(), rating.getRating());
-//				}
-				dbAdapter.insertFavoriteDatePlan(favoriteId, title.getText().toString(), 
-						comment.getText().toString(), rating.getRating());
+				if(className.equals(SpotDetailActivity.class.getName())){
+					dbAdapter.insertFavoriteSpot(favoriteId, title.getText().toString(), 
+							comment.getText().toString(), (double)rating.getRating());
+				}else{
+					dbAdapter.insertFavoriteDatePlan(favoriteId, title.getText().toString(), 
+							comment.getText().toString(), rating.getRating());
+				}
 				dbAdapter.close();
 			}
 		});

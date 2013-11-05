@@ -2,7 +2,6 @@ package jap.gr.java_conf.dateroid;
 
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -27,29 +26,16 @@ public class KeyValueAdapter extends ArrayAdapter<String> {
 	}
 
 	public String getItem(int position) {
-		return items.get(position).getStringValue();
+		return items.get(position).getOptionValue();
 	}
 
-	public String getStringKey(int position) {
-		return items.get(position).getStringKey();
-	}
-	
-	public int getIntKey(int position){
-		return items.get(position).getIntKey();
+	public String getItemKey(int position) {
+		return items.get(position).getOptionKey();
 	}
 
 	public int getPosition(String itemId) {
 		for (int i = 0; i < items.size(); i++) {
-			if(items.get(i).getStringKey() == itemId){
-				return i;
-			}
-		}
-		return 0;
-	}
-	
-	public int getPosition(int itemId){
-		for (int i = 0; i < items.size(); i++) {
-			if(items.get(i).getIntKey() == itemId){
+			if(items.get(i).getOptionKey() == itemId){
 				return i;
 			}
 		}
@@ -60,7 +46,7 @@ public class KeyValueAdapter extends ArrayAdapter<String> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView label = new TextView(context);
 		label.setTextColor(Color.BLACK);
-		label.setText(items.get(position).getStringValue());
+		label.setText(items.get(position).getOptionValue());
 		return label;
 	}
 	

@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -111,9 +110,7 @@ public class DiaryReadActivity extends FragmentActivity {
         edit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), DiaryEditActivity.class);
-				intent.putExtra("diaryDate", diaryDate);
-				startActivity(intent);
+				
 			}
 		});
         

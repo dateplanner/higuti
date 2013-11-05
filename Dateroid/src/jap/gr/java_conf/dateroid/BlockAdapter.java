@@ -15,11 +15,11 @@ import android.widget.TextView;
 public class BlockAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<Block> items;
+	private List<Object> items;
 	private List<Object> viewTypes;
 	private LayoutInflater inflater;
 	
-	public BlockAdapter(Context context, List<Block> items){
+	public BlockAdapter(Context context, List<Object> items){
 		this.context = context;
 		this.items = items;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,7 +48,7 @@ public class BlockAdapter extends BaseAdapter {
 //	}
 	
 	@Override
-	public Block getItem(int position) {
+	public Object getItem(int position) {
 		return items.get(position);
 	}
 
@@ -72,7 +72,7 @@ public class BlockAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View blockView =null;
 		
-		Block baseItem = items.get(position);
+		Object baseItem = items.get(position);
 		if(baseItem instanceof BlockDateSpot){
 			if(convertView == null){
 				blockView = inflater.inflate(R.layout.list_item_block_datespot, parent, false);

@@ -1,24 +1,26 @@
 package jap.gr.java_conf.dateroid;
 
+import java.sql.RowId;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.R.integer;
-import android.app.AlertDialog;
+import android.R.string;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DiaryEditActivity extends FragmentActivity {
@@ -37,9 +39,8 @@ public class DiaryEditActivity extends FragmentActivity {
     
     private DBAdapter dbAdapter;
     private long[] photoIdArray = new long[4];
-    private ImageView[] photoImageArray;
     private ImageView curImageView;
-    private int diaryId;
+    private int  diaryId;
     private int curImageNo;
     
     @Override
@@ -51,6 +52,7 @@ public class DiaryEditActivity extends FragmentActivity {
         if(intent == null){
         	return;
         }
+        diaryId = intent.getIntExtra("diaryId", 0);
         
         toHome = (ImageButton)findViewById(R.id.toHome);
         edit = (ImageButton)findViewById(R.id.edit);
@@ -64,15 +66,7 @@ public class DiaryEditActivity extends FragmentActivity {
         photo3 = (ImageView)findViewById(R.id.photo3);
         photo4 = (ImageView)findViewById(R.id.photo4);
         
-        String diaryDate = intent.getStringExtra("diaryDate");
-        
-        StringBuilder builder = new StringBuilder();
-        builder.append(diaryDate.substring(0, 4) + "年");
-        builder.append(diaryDate.substring(4, 6) + "月");
-        builder.append(diaryDate.substring(6, 8) + "日");
-        date.setText(builder.toString());
-        
-        setDiaryEditView(diaryDate);
+        date.setText(DateFormat.format("yyyy年MM月dd日", Calendar.getInstance()));
 
         toHome.setOnClickListener(new OnClickListener() {
 			@Override
@@ -93,44 +87,23 @@ public class DiaryEditActivity extends FragmentActivity {
         save.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				new AlertDialog.Builder(DiaryEditActivity.this)
-				.setTitle(getText(R.string.save_diary_title))
-				.setMessage(getText(R.string.save_diary_message))
-				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dbAdapter = new DBAdapter(getApplicationContext());
-						dbAdapter.openWritableDatabase();
-						String today = DateFormat.format("yyyyMMdd", Calendar.getInstance()).toString();
-						//デートプラントの結合をどうするか要検討
-						long rowId = dbAdapter.insertDiary(today, title.getText().toString(),
-								diary.getText().toString());
-						
-						if(rowId == -1){
-							//エラー処理
-						}else {
-							int j = 1;
-							for (int i = 0; i < photoIdArray.length; i++) {
-								long photoId = photoIdArray[i];
-								if(photoId != 0){
-									dbAdapter.insertDiaryPhoto(rowId, j, photoId);
-									j++;
-								}
-							}
-						}
-						dbAdapter.close();
-						//カレンダー画面へ戻る（インテントの発行？）
+				dbAdapter = new DBAdapter(getApplicationContext());
+				dbAdapter.openWritableDatabase();
+				String today = DateFormat.format("yyyyMMdd", Calendar.getInstance()).toString();
+				//デートプラントの結合をどうするか要検討
+				long rowId = dbAdapter.insertDiary(today, title.getText().toString(),
+						diary.getText().toString());
+				if(rowId == -1){
+					//エラー処理
+				}
+				int j = 1;
+				for (int i = 0; i < photoIdArray.length; i++) {
+					long photoId = photoIdArray[i];
+					if(photoId != 0){
+						dbAdapter.insertDiaryPhoto(rowId, j, photoId);
 					}
-				})
-				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				}).show();
-				
-				
+					j++;
+				}
 			}
 		});
         
@@ -183,36 +156,6 @@ public class DiaryEditActivity extends FragmentActivity {
 	         		MediaStore.Images.Thumbnails.MINI_KIND, null);
 			curImageView.setImageBitmap(bmp);
 		}
-	};
-	
-	private void setDiaryEditView(String diaryDate){
-		dbAdapter = new DBAdapter(this);
-		dbAdapter.openReadableDatabase();
-		Cursor diaryCursor =  dbAdapter.selectDiary(diaryDate);
-		
-		if(diaryCursor.getCount() != 0){
-			diaryCursor.moveToFirst();
-			title.setText(diaryCursor.getString(diaryCursor.getColumnIndex("diary_title")));
-			diary.setText(diaryCursor.getString(diaryCursor.getColumnIndex("diary_text")));
-			diaryId = diaryCursor.getInt(diaryCursor.getColumnIndex("_id"));
-			
-			Cursor photoCursor = dbAdapter.selectDiaryPhoto(diaryId);
-			photoImageArray = new ImageView[]{photo1, photo2, photo3, photo4};
-			
-			int length = photoCursor.getCount();
-	        for (int i = 0; i < length; i++) {
-	        	photoCursor.moveToNext();
-				photoIdArray[i] = photoCursor.getLong(photoCursor.getColumnIndex("diary_photo_id"));
-			}
-	        
-			ContentResolver resolver = getContentResolver();
-	        for (int i = 0; i < length; i++) {
-				Bitmap bmp = MediaStore.Images.Thumbnails.getThumbnail(resolver, photoIdArray[i],
-		         		MediaStore.Images.Thumbnails.MINI_KIND, null);
-	            photoImageArray[i].setImageBitmap(bmp);
-			}
-		}
-		dbAdapter.close();
 	};
 
 }

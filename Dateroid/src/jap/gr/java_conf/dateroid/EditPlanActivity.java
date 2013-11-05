@@ -3,20 +3,12 @@ package jap.gr.java_conf.dateroid;
 import jap.gr.java_conf.dateroid.DirectionsJSON.TravelMode;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 
-import android.R.integer;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -42,10 +34,9 @@ public class EditPlanActivity extends Activity {
 	private WebView webView;
 	
 	private DBAdapter dbAdapter;
-	private ArrayList<Block> blocks;
 	private int[] areas;
 	private int outdoorFlg;
-	private int blockCounts;
+	private int blocks;
 	
 	
 	@Override
@@ -71,119 +62,35 @@ public class EditPlanActivity extends Activity {
 		
 		areas = intent.getIntArrayExtra("areas");
 		outdoorFlg = intent.getIntExtra("outdoorFlg", 0);
-		blockCounts = intent.getIntExtra("blocks", 0);
+		blocks = intent.getIntExtra("blocks", 0);
 		
-		blocks = new ArrayList<Block>();
+		ArrayList<Object> items = new ArrayList<Object>();
 		
 		dbAdapter = new DBAdapter(this);
 		dbAdapter.openReadableDatabase();
-		Cursor cursor = dbAdapter.selectAutoDateSpot(areas, outdoorFlg, blockCounts);
-		int blockNo = 1;
+		Cursor cursor = dbAdapter.selectAutoDateSpot(areas, outdoorFlg, blocks);
+		int blockNo;
 		while (cursor.moveToNext()) {
 			BlockDateSpot blockDS = new BlockDateSpot();
+			blockNo = cursor.getPosition() + 1;
 			
 			blockDS.setBlockNo(blockNo);
 			blockDS.setSpotId(cursor.getInt(cursor.getColumnIndex("_id")));
 			blockDS.setSpotName(cursor.getString(cursor.getColumnIndex("datespot_name")));
 			blockDS.setAddress(cursor.getString(cursor.getColumnIndex("datespot_address")));
 
-			blocks.add(blockDS);
-			blockNo++;
-			if(blockNo == 3){
-				BlockRestaurant blockRS = new BlockRestaurant();
-				blockRS.setBlockNo(blockNo);
-				blocks.add(blockRS);
-				blockNo++;
+			items.add(blockDS);
+			if(blockNo == 2){
+				items.add(new BlockRestaurant());
 			}
 		}
-		BlockAdapter adapter = new BlockAdapter(this, blocks);
+		dbAdapter.close();
+		BlockAdapter adapter = new BlockAdapter(this, items);
 		blockList.setAdapter(adapter);
-		cursor.close();
 		
-		blockList.setOnItemClickListener(blockListItemClickListener);
-
-		
-		auto.setOnClickListener(new OnClickListener() {
+		blockList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
-				
-				int count = 0;
-				ArrayList<Integer> exchangeList = new ArrayList<Integer>();
-				for (Block block : blocks) {
-					if(!block.isPin()){
-						exchangeList.add(block.getBlockNo());
-						count++;
-					}
-				}
-				if(count == 0){
-					//交換するブロックなし
-					return;
-				}
-				dbAdapter = new DBAdapter(getApplicationContext());
-				dbAdapter.openReadableDatabase();
-				Cursor cursor = dbAdapter.selectAutoDateSpot(areas, outdoorFlg, count);
-				for (int i = 0; i < count; i++) {
-					cursor.moveToNext();
-					BlockDateSpot blockDS = new BlockDateSpot();
-					int blockPos = exchangeList.get(i);
-					
-					blockDS.setBlockNo(blockPos);
-					blockDS.setSpotId(cursor.getInt(cursor.getColumnIndex("_id")));
-					blockDS.setSpotName(cursor.getString(cursor.getColumnIndex("datespot_name")));
-					blockDS.setAddress(cursor.getString(cursor.getColumnIndex("datespot_address")));
-					blocks.set(blockPos -1, blockDS);
-				}
-				BlockAdapter adapter = new BlockAdapter(EditPlanActivity.this, blocks);
-				blockList.setAdapter(adapter);
-				cursor.close();
-			}
-				
-		});
-		
-		save.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				new AlertDialog.Builder(EditPlanActivity.this)
-				.setTitle(getText(R.string.save_date_plan_title))
-				.setMessage(getText(R.string.save_date_plan_message))
-				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dbAdapter = new DBAdapter(getApplicationContext());
-						dbAdapter.openWritableDatabase();
-						String today = DateFormat.format("yyyyMMdd", Calendar.getInstance()).toString();
-						long rowId = dbAdapter.insertDatePlan(today);
-						if(rowId == -1){
-							//エラー処理
-						}
-						for (Block block : blocks) {
-							int blockType;
-							
-							if(block instanceof BlockDateSpot){
-								BlockDateSpot blockDS = (BlockDateSpot)block;
-								blockType = 0;
-								int spotId = blockDS.getSpotId();
-								dbAdapter.insertPlanSpotDetail(rowId, block.getBlockNo(), spotId, blockType);
-							}else if(block instanceof BlockRestaurant){
-								BlockRestaurant blockRS = (BlockRestaurant)block;
-								blockType = 1;
-								String restaurantId = blockRS.getRestaurantId();
-								dbAdapter.insertPlanRestaurantDetail(rowId, block.getBlockNo(), restaurantId, blockType);
-							}else {
-								BlockFree blockFR = (BlockFree)block;
-								blockType = 2;
-								String comment = blockFR.getComment();
-								dbAdapter.insertPlanFreeDetail(rowId, block.getBlockNo(), comment, blockType);
-							}
-						}
-					}
-				})
-				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				}).show();
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			}
 		});
 		
@@ -222,44 +129,6 @@ public class EditPlanActivity extends Activity {
 			}
 		});
 	}
-	
-	private OnItemClickListener blockListItemClickListener = new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			ListAdapter adapter = (ListAdapter)parent.getAdapter();
-			switch (adapter.getItemViewType(position)) {
-			//デートスポット
-			case 0:
-				BlockDateSpot blockDS = (BlockDateSpot)adapter.getItem(position);
-
-				break;
-			//レストラン
-			case 1:
-				BlockRestaurant blockRS = (BlockRestaurant)adapter.getItem(position);
-				if(blockRS.getRestaurantId() != null){
-					
-					
-				}else {
-					ArrayList<MyObject> spotList = new ArrayList<MyObject>();
-					for (Block block : blocks) {
-						if(block instanceof BlockDateSpot){
-							BlockDateSpot _blockDS = (BlockDateSpot)block;
-							spotList.add(new MyObject(_blockDS.getSpotId(), _blockDS.getSpotName()));
-						}
-					}
-					Intent intent = new Intent(getApplicationContext(), RestaurantNearbySearchActivity.class);
-					intent.putExtra("spotList", spotList);
-					startActivity(intent);
-				}
-				break;
-			//フリー
-			case 2:
-				BlockFree blockFR = (BlockFree)adapter.getItem(position);
-				break;
-			}
-			
-		}
-	};
 
 	
 	

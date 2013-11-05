@@ -118,7 +118,7 @@ public class PlaceSearchActivity extends Activity {
 			break;
 
 		case R.id.toGuruNavi:
-			intent = new Intent(this, RestaurantFreeSearchActivity.class);
+			intent = new Intent(this, MealSearchActivity.class);
 			startActivity(intent);
 			break;
 		}

@@ -24,7 +24,6 @@ public class DiaryCalendarActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), DiaryEditActivity.class);
-				intent.putExtra("diaryDate", "20131101");
 				startActivity(intent);
 			}
 		});
