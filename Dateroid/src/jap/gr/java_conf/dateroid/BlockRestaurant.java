@@ -21,5 +21,14 @@ public class BlockRestaurant extends Block{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	@Override
+	void setPin(boolean pin) {
+	}
+
+	@Override
+	boolean isPin() {
+		return true;
+	}
 	
 }

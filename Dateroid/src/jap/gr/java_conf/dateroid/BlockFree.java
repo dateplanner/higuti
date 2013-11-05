@@ -22,4 +22,13 @@ public class BlockFree extends Block{
 	void setAddress(String address) {
 	}
 
+	@Override
+	void setPin(boolean pin) {
+	}
+
+	@Override
+	boolean isPin() {
+		return true;
+	}
+
 }

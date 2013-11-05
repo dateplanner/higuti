@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:id="@+id/spot_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="スポット指定"/>
+    <Spinner 
+        android:id="@+id/spot_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>"
+    
+    <TextView 
+        android:id="@+id/range_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="範囲指定"/>
+    <Spinner 
+        android:id="@+id/range_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+    <TextView 
+        android:id="@+id/category_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="カテゴリー指定"/>
+    
+    <Spinner 
+        android:id="@+id/category_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <ImageButton 
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+     
+</LinearLayout>

@@ -17,6 +17,13 @@
 	<string name="gurunavi_path_largecategory">/ver1/CategoryLargeSearchAPI/</string>
 	<string name="gurunavi_path_smallcategory">/ver1/CategorySmallSearchAPI</string>
 	
+	<string name="twitter_consumer_key">Fse5VyKi9heKbQQ6VpEcnQ</string>
+	<string name="twitter_consumer_secret">YIuZ2OIAVyE4htXM5t3E9t7uGFKfSN65vo9F60xSw8</string>
+	<string name="twitter_callback_url">dateroid://twitter</string>
+	
+	<string name="facebook_app_id">172891579580836</string>
+	<string name="facebook_app_secret">18c42a08c867afea7ea1baa7dfd9bc75</string>
+	
 	<!-- 警告メッセージ -->
 	<string name="noTel">該当する電話番号がありません</string>
 	
@@ -36,6 +43,7 @@
 	<string name="require_title">タイトルをいれてね！</string>
     <string name="diary_content">今日の感想を書いてね！</string>
     <string name="select_photos">写真を選んでね!!\n（最高で4枚まで選べるよ）</string>
+
 	
     <!-- 履歴 -->
     <string name="favoriteDatePlan">お気に入りデートプラン</string>
@@ -49,5 +57,20 @@
     
     <!-- スポット詳細 -->
     <string name="spotDetail_title">スポット詳細</string>
+    
+    <!-- ダイアログメッセージ -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_favorite_spot_title">お気に入りスポット</string>
+    <string name="save_favorite_spot_message">お気に入りスポットに登録しますか？</string>
+    <string name="save_diary_title">日記の保存</string>
+    <string name="save_diary_message">日記を保存しますか？</string>
+   	<string name="save_date_plan_title">デートプランの保存</string>
+   	<string name="save_date_plan_message">デートプランを保存しますか？</string>
+   	<string name="select_block_title">新規作成</string>
+   	<string name="select_block_spot">デートスポット</string>
+   	<string name="select_block_restaurant">レストラン</string>
+   	<string name="select_block_free">フリー</string>
+   	<string name="select_block_cancel">キャンセル</string>
     
 </resources>

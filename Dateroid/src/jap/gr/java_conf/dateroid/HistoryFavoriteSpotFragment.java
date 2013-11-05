@@ -1,6 +1,7 @@
 package jap.gr.java_conf.dateroid;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,6 +67,15 @@ public class HistoryFavoriteSpotFragment extends Fragment {
 		list.setAdapter(adapter);
 		dbAdapter.close();
 
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(getActivity(), SpotDetailActivity.class);
+				intent.putExtra("spotId", (int)id);
+				startActivityForResult(intent, 0);
+			}
+		});
+		
         return rootView;
     }
 

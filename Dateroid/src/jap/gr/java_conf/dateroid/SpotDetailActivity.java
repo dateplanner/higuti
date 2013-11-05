@@ -1,12 +1,15 @@
 package jap.gr.java_conf.dateroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -99,9 +102,23 @@ public class SpotDetailActivity extends Activity {
 		favorite.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), FavoriteRegisterActivity.class);
-				intent.putExtra("favoriteId", spotId);
-				startActivityForResult(intent, 0);
+				new AlertDialog.Builder(SpotDetailActivity.this)
+				.setTitle(getText(R.string.save_favorite_spot_title))
+				.setMessage(getText(R.string.save_favorite_spot_message))
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dbAdapter = new DBAdapter(getApplicationContext());
+						dbAdapter.openWritableDatabase();
+						dbAdapter.insertFavoriteSpot(spotId);
+					}
+				})
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				}).show();
 			}
 		});
 		

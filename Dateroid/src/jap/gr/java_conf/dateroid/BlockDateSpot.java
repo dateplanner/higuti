@@ -5,13 +5,16 @@ import java.util.ArrayList;
 
 public class BlockDateSpot extends Block{
 
-	int spotId;
-	String spotName;
-	String spotAddress;
+	private int spotId;
+	private String spotName;
+	private String spotAddress;
+	private boolean pinned;
+
 	ArrayList<Integer> spotGenre;
 	
 	public BlockDateSpot(){
 		spotGenre = new ArrayList<Integer>();
+		pinned = false;
 	}
 	
 	
@@ -42,8 +45,14 @@ public class BlockDateSpot extends Block{
 	public void setAddress(String address) {
 		this.spotAddress = address;
 	}
-
-
+	
+	public void setPin(boolean pin){
+		pinned = pin;
+	}
+	
+	public boolean isPin(){
+		return pinned;
+	}
 	
 	
 	

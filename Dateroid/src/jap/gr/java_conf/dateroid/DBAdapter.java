@@ -1,16 +1,12 @@
 package jap.gr.java_conf.dateroid;
 
-import jap.gr.java_conf.dateroid.R.string;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +14,6 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.widget.Toast;
 
 public class DBAdapter{
 	
@@ -128,8 +123,16 @@ public class DBAdapter{
 		stmt = db.compileStatement("INSERT INTO diary(diary_date, diary_title, diary_text) " +
 				"VALUES(?, ?, ?)");
 		stmt.bindString(1, date);
-		stmt.bindString(2, title);
-		stmt.bindString(3, text);
+		if(title != null){
+			stmt.bindString(2, title);
+		}else{
+			stmt.bindNull(2);
+		}
+		if(text != null){
+			stmt.bindString(3, text);
+		}else{
+			stmt.bindNull(3);
+		}
 //		stmt.bindLong(4, id);
 		db.beginTransaction();
 		try {
@@ -156,31 +159,28 @@ public class DBAdapter{
 		}
 	}
 	
-	public void insertDatePlan(String date, int executed_flg){
-		stmt = db.compileStatement("INSERT INTO date_plan(date_plan_date, date_plan_executed_flg)" +
-				" VALUES(?, ?)");
+	public long insertDatePlan(String date){
+		long rowId;
+		stmt = db.compileStatement("INSERT INTO date_plan(date_plan_date)" +
+				" VALUES(?)");
 		stmt.bindString(1, date);
-		stmt.bindLong(2, executed_flg);
 		db.beginTransaction();
 		try {
-			stmt.executeInsert();
+			rowId = stmt.executeInsert();
 			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
 		}
+		return rowId;
 	}
 	
-	public void insertDatePlanDetail(int plan_id, int detail_id, String comment, 
-			String restaurant_id, int spot_id, int block_type){
+	public void insertPlanSpotDetail(long plan_id, int detail_id, int spot_id, int block_type){
 		stmt = db.compileStatement("INSERT INTO date_plan_detail(date_plan_id, date_plan_detail_id" +
-						", date_plan_detail_comment, restaurant_id, date_spot_id, block_type)" +
-						" VALUES(?, ?, ?, ?, ?, ?)");
+						",date_spot_id, block_type) VALUES(?, ?, ?, ?)");
 		stmt.bindLong(1, plan_id);
 		stmt.bindLong(2, detail_id);
-		stmt.bindString(3, comment);
-		stmt.bindString(4, restaurant_id);
-		stmt.bindLong(5, spot_id);
-		stmt.bindLong(6, block_type);
+		stmt.bindLong(3, spot_id);
+		stmt.bindLong(4, block_type);
 		db.beginTransaction();
 		try {
 			stmt.executeInsert();
@@ -190,18 +190,53 @@ public class DBAdapter{
 		}
 	}
 	
-	public void insertFavoriteSpot(int spot_id, String title, String comment, double rating){
-		stmt = db.compileStatement("INSERT INTO favorite_spot(favorite_spot_id, favorite_spot_title, " +
-				"favorite_spot_comment, favorite_spot_rating) VALUES(?, ? ,?, ?)");
-		stmt.bindLong(1, spot_id);
-		stmt.bindString(2, title);
-		stmt.bindString(3, comment);
-		stmt.bindDouble(4, rating);
+	public void insertPlanRestaurantDetail(long plan_id, int detail_id, String restaurant_id, int block_type){
+		stmt = db.compileStatement("INSERT INTO date_plan_detail(date_plan_id, date_plan_detail_id" +
+						", restaurant_id, block_type) VALUES(?, ?, ?, ?)");
+		stmt.bindLong(1, plan_id);
+		stmt.bindLong(2, detail_id);
+		if(restaurant_id != null){
+			stmt.bindString(3, restaurant_id);
+		}else {
+			stmt.bindNull(3);
+		}
+		stmt.bindLong(4, block_type);
 		db.beginTransaction();
 		try {
 			stmt.executeInsert();
 			db.setTransactionSuccessful();
-			Log.v("test", "success");
+		}finally{
+			db.endTransaction();
+		}
+	}
+	
+	public void insertPlanFreeDetail(long plan_id, int detail_id, String comment, int block_type){
+		stmt = db.compileStatement("INSERT INTO date_plan_detail(date_plan_id, date_plan_detail_id" +
+						", date_plan_detail_comment, block_type) VALUES(?, ?, ?, ?)");
+		stmt.bindLong(1, plan_id);
+		stmt.bindLong(2, detail_id);
+		if(comment != null){
+			stmt.bindString(3, comment);
+		}else {
+			stmt.bindNull(3);
+		}
+		stmt.bindLong(4, block_type);
+		db.beginTransaction();
+		try {
+			stmt.executeInsert();
+			db.setTransactionSuccessful();
+		}finally{
+			db.endTransaction();
+		}
+	}
+	
+	public void insertFavoriteSpot(int spot_id){
+		stmt = db.compileStatement("INSERT INTO favorite_spot(favorite_spot_id) VALUES(?)");
+		stmt.bindLong(1, spot_id);
+		db.beginTransaction();
+		try {
+			stmt.executeInsert();
+			db.setTransactionSuccessful();
 		}finally{
 			db.endTransaction();
 		}
@@ -211,8 +246,16 @@ public class DBAdapter{
 		stmt = db.compileStatement("INSERT INTO favorite_date_plan(date_plan_id, favorite_date_plan_title" +
 						", favorite_date_plan_comment, favorite_date_plan_rating) VALUES(?, ?, ?, ?)");
 		stmt.bindLong(1, plan_id);
-		stmt.bindString(2, title);
-		stmt.bindString(3, comment);
+		if(title != null){
+			stmt.bindString(2, title);
+		}else {
+			stmt.bindNull(2);
+		}
+		if(comment != null){
+			stmt.bindString(3, comment);
+		}else {
+			stmt.bindNull(3);
+		}
 		stmt.bindDouble(4, rating);
 		try {
 			stmt.executeInsert();
@@ -415,8 +458,8 @@ public class DBAdapter{
 //				//デートプランテーブル
 //				db.execSQL("create table date_plan(" +
 //						"_id INTEGER PRIMARY KEY AUTOINCREMENT" +
-//						", date_plan_date TEXT not null" +
-//						", date_plan_executed_flg INTEGER" +
+//						", date_plan_date TEXT" +
+//						", date_plan_executed_flg INTEGER default 0" +
 //						")");
 //				
 //				//デートプラン詳細テーブル
@@ -436,9 +479,6 @@ public class DBAdapter{
 //				db.execSQL("create table favorite_spot(" +
 //						"_id INTEGER PRIMARY KEY AUTOINCREMENT" +
 //						", favorite_spot_id INTEGER not null" +
-//						", favorite_spot_title TEXT" +
-//						", favorite_spot_comment TEXT" + 
-//						", favorite_spot_rating REAL" +
 //						", foreign key (favorite_spot_id) references date_spot(_id) on delete cascade" +
 //						")");
 //				

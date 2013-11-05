@@ -18,12 +18,6 @@
             android:contentDescription="toHome"
             android:src="@drawable/ic_launcher" />
 
-        <ImageButton
-            android:id="@+id/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="edit"
-            android:src="@drawable/ic_launcher" />
 
         <ImageButton
             android:id="@+id/save"
@@ -32,6 +26,13 @@
             android:contentDescription="save"
             android:src="@drawable/ic_launcher" />
 
+        <ImageButton
+            android:id="@+id/facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="edit"
+            android:src="@drawable/ic_launcher" />
+           
         <ImageButton
             android:id="@+id/tweet"
             android:layout_width="wrap_content"
